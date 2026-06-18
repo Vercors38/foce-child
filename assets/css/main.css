@@ -1,0 +1,325 @@
+@charset "UTF-8";
+@keyframes revealText {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.text-hidden {
+  color: transparent !important;
+}
+.text-hidden::first-line, .text-hidden span {
+  opacity: 0;
+}
+
+.text-visible {
+  color: #FFFFFF !important;
+  animation: revealText 2s forwards;
+}
+.text-visible.story h2, .text-visible#studio h2 {
+  color: #1F1F1F !important;
+}
+.text-visible span {
+  opacity: 1;
+  transition: opacity 5s ease-out;
+}
+
+#oscars .h3-wrapper h3 {
+  background-image: url("../images/orange_oscars_bg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+  display: block;
+  opacity: 1 !important;
+}
+
+@keyframes fadeInPageUp {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeInPageDown {
+  from {
+    opacity: 0;
+    transform: translateY(-35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/*.banner{
+    opacity: 0;
+    animation: fadeInPageDown 1.2s ease-out forwards;
+}*/
+.banner {
+  opacity: 0;
+  animation: fadeInPageDown 1.4s ease-out 0.5s forwards;
+}
+.banner img {
+  opacity: 0;
+  animation: fadeInPageUp 1.4s ease-out 0.5s forwards;
+}
+
+.story,
+#studio {
+  opacity: 0;
+  animation: fadeInPageUp 1.4s ease-out 0.5s forwards;
+}
+
+/* animations fleurs rotation */
+@keyframes spinForever {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.story h2::after {
+  animation: spinForever 10s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+.story__article::after {
+  animation: spinForever 10s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+#studio h2::before {
+  animation: spinForever 10s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+#studio h2::after {
+  animation: spinForever 10s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.site-footer::before {
+  animation: spinForever 10s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+.site-footer::after {
+  animation: spinForever 10s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+ul::after {
+  animation: spinForever 10s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.banner::before {
+  animation: spinForever 10s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+.banner::after {
+  animation: spinForever 10s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* section oscars*/
+#oscars {
+  position: relative;
+  width: 100%;
+  padding: 6em 0;
+  background-color: #FFF5E9;
+  overflow: hidden;
+}
+#oscars .oscars-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 75%;
+  margin: auto;
+  gap: 3rem;
+}
+@media only screen and (max-width: 767px) {
+  #oscars .oscars-content {
+    flex-direction: column;
+    text-align: center;
+    width: 90%;
+  }
+}
+#oscars .h3-wrapper {
+  flex: 1;
+  position: relative;
+}
+#oscars .h3-wrapper h3 {
+  font-size: 42px;
+  line-height: 52.5px;
+  text-align: left;
+  letter-spacing: -0.05em;
+  color: #FFFFFF;
+  background-image: url("../images/orange_oscars_bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  z-index: 1;
+  margin: 0;
+  padding: 3rem 4rem;
+  box-sizing: border-box;
+}
+#oscars .h3-wrapper h3 span {
+  display: inline;
+}
+#oscars img {
+  max-width: 280px;
+  height: auto;
+  object-fit: contain;
+}
+@media only screen and (max-width: 767px) {
+  #oscars img {
+    max-width: 200px;
+  }
+}
+#oscars::before {
+  content: "";
+  position: absolute;
+  left: 2em;
+  top: 20%;
+  width: 130px;
+  height: 130px;
+  background-image: url("../images/fleur.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1;
+  animation: spinForever 10s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+@media only screen and (max-width: 1024px) {
+  #oscars::before {
+    display: none;
+  }
+}
+#oscars::after {
+  content: "";
+  position: absolute;
+  right: -50px;
+  top: 25%;
+  width: 150px;
+  height: 150px;
+  background-image: url("assets/images/purple_flower.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1;
+  animation: spinForever 10s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+@media only screen and (max-width: 1024px) {
+  #oscars::after {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   3. HERO HEADER (.banner)
+   ========================================================================== */
+.banner {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.banner-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-fallback,
+#banner-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  display: block;
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 8%;
+  box-sizing: border-box;
+}
+
+.container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.banner-title {
+  max-width: 800px;
+  width: 85%;
+  height: auto;
+  opacity: 0 !important;
+  margin-top: 0 !important;
+  transform: translateY(100px);
+  transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.container.visible .banner-title {
+  opacity: 1 !important;
+  transform: translateY(0);
+  animation: floatingTitle 2s ease-in-out infinite 0.9s !important;
+}
+
+/* ==========================================================================
+   4. RESPONSIVE MOBILE (Uniquement les changements pour petits écrans)
+   ========================================================================== */
+@media only screen and (max-width: 767px) {
+  .banner {
+    min-height: 240px;
+    height: 240px;
+  }
+  #banner-video {
+    display: none;
+  }
+  .banner-title {
+    max-width: 100%;
+  }
+}
+/* Animation pour le mouvement flottant du titre du site*/
+@keyframes floatingTitle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/*# sourceMappingURL=main.css.map */
