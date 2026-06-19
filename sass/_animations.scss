@@ -381,3 +381,39 @@ ul{
        transform: translateY(-15px);
    }
 }
+
+/* ==========================================================================
+   5. SLIDER CARACTÈRES
+   ========================================================================== */
+/* ==========================================================================
+   SECTION PERSONNAGES - RECONSTRUCTION DU CARROUSEL
+   ========================================================================== */
+#characters {
+    display: flex !important;
+    flex-direction: column !important; // Force le titre ET le slider à se superposer verticalement
+    align-items: center;
+    width: 100%;
+    overflow: hidden; // Évite les barres de défilement indésirables dues à l'effet 3D
+    padding: 4rem 0;
+
+    // Gestion du bloc titre
+    .main-character {
+        width: 100%;
+        text-align: left; // Aligne le titre à gauche comme sur la maquette d'origine
+        padding-left: 10%; // Ajuste pour correspondre à l'alignement du texte de l'histoire
+        margin-bottom: 2rem;
+        
+        h3 {
+            display: inline-block;
+        }
+    }
+
+    // Le carrousel prend toute la largeur disponible en dessous
+    .swiper {
+        width: 100%;
+        padding-top: 30px;
+        padding-bottom: 60px; // Laisse de la place pour les noms sous les ronds
+    }
+}
+
+  

@@ -1,111 +1,121 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Sélection de TOUS les titres concernés par l'animation textuelle
+
+    /* ==========================================================================
+       1. ANIMATION DES TITRES AU SCROLL (Intersection Observer)
+       ========================================================================== */
     const titlesToAnimate = document.querySelectorAll(
         ".story h2, #studio h2, #oscars h3, #place h3, .main-character h3"
     );
 
-    const observerOptions = {
+    const titleObserverOptions = {
         root: null,
         rootMargin: "0px",
-        threshold: 1, // Le titre doit être entièrement visible pour déclencher l'animation
+        threshold: 1, // Entièrement visible pour déclencher
     };
 
     const titleObserver = new IntersectionObserver(function (entries, observer) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Déclenche l'apparition du texte uniquement
                 entry.target.classList.add("text-visible");
                 observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, titleObserverOptions);
 
     titlesToAnimate.forEach(title => {
         title.classList.add("text-hidden");
         titleObserver.observe(title);
     });
-});
 
-        // Animation de bas en haut du titre du site lorsqu'il devient visible
-document.addEventListener('DOMContentLoaded', function() {
+
+    /* ==========================================================================
+       2. HERO HEADER : MONTEE DU LOGO & EFFET PARALLAXE
+       ========================================================================== */
     const container = document.querySelector('.container');
     const banner = document.querySelector('.banner');
 
-    // Sécurité : on vérifie que les éléments existent sur la page pour éviter les erreurs JS
-    if (!container || !banner) return;
+    // On exécute cette partie uniquement si les éléments du Header existent sur la page
+    if (container && banner) {
+        let ticking = false;
 
-    // Configuration de l'observateur de visibilité
-    const observerOptions = {
-        root: null, // Calé sur la fenêtre du navigateur (Viewport)
-        threshold: 0.1 // Déclenche dès que 10% de la bannière est visible
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // L'astuce du setTimeout : on laisse 50ms au navigateur pour installer 
-                // le logo dans sa position basse avant de lui ordonner de monter.
-                setTimeout(() => {
-                    container.classList.add('visible');
-                }, 50);
+        // Détection de la visibilité de la bannière
+        function checkVisibility() {
+            const rect = banner.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
+            
+            if (isVisible) {
+                container.classList.add('visible');
             } else {
-                // Enlève la classe si l'utilisateur scrolle loin, pour pouvoir rejouer l'effet
                 container.classList.remove('visible');
             }
+        }
+
+        // Calcul du déplacement parallaxe à 50% de la vitesse de scroll
+        function parallaxEffect() {
+            const scrollY = window.scrollY;
+            const parallaxSpeed = 0.5; 
+            const translateY = scrollY * parallaxSpeed;
+            
+            container.style.transform = `translateY(${translateY}px)`;
+            ticking = false;
+        }
+
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    checkVisibility();
+                    parallaxEffect();
+                });
+                ticking = true;
+            }
+        }
+
+        // Vérification et initialisation au chargement de la page
+        checkVisibility();
+
+        // Écouteur d'événement passif sur le défilement global
+        window.addEventListener('scroll', onScroll, { passive: true });
+    }
+
+
+    /* ==========================================================================
+       3. CARROUSEL DES PERSONNAGES (SwiperJS - Effet Coverflow)
+       ========================================================================== */
+    // Utilisation de la classe moderne .swiper 
+    const swiperElement = document.querySelector(".swiper");
+
+    if (swiperElement) {
+        const swiper = new Swiper(swiperElement, {
+            effect: "coverflow",
+            slidesPerView: 'auto', // S'adapte à la largeur définie dans ton SCSS
+            spaceBetween: 0,
+            centeredSlides: true,  // Indispensable pour l'effet Coverflow 3D
+            loop: true,            // Carrousel infini
+            
+            // Flèches de navigation optionnelles
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            
+            // Défilement automatique fluide
+            autoplay: {
+                delay: 1500,
+                disableOnInteraction: false,
+            },
+            
+            // Paramètres géométriques de l'effet Coverflow
+            coverflowEffect: {
+                rotate: 50,          // Angle des cartes sur les côtés
+                stretch: 0,          // Espacement
+                depth: 100,          // Perspective 3D
+                modifier: 1,
+                slideShadows: false, // Pas d'ombres agressives sur les illustrations
+            },
         });
-    }, observerOptions);
-
-    // On lance l'écoute sur la bannière
-    observer.observe(banner);
-});
-
-// gestion du parallax sur le logo du site
-document.addEventListener('DOMContentLoaded', function() {
-    const container = document.querySelector('.container');
-    const banner = document.querySelector('.banner');
-    
-    if (!container || !banner) return;
-
-    let ticking = false;
-
-    // 1. Gestion de la classe 'visible' pour déclencher la montée initiale CSS
-    function checkVisibility() {
-        const rect = banner.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
-        
-        if (isVisible) {
-            container.classList.add('visible');
-        } else {
-            container.classList.remove('visible');
-        }
+    } else {
+        // Simple avertissement silencieux si on est sur une page sans carrousel
+        console.log("Swiper non initialisé : aucun élément .swiper trouvé.");
     }
 
-                            // 2. Gestion de l'effet de parallaxe à la moitié de la vitesse
-    function parallaxEffect() {
-        const scrollY = window.scrollY;
-        const parallaxSpeed = 0.5; // Vitesse demandée (moitié de la vitesse de la page)
-        const translateY = scrollY * parallaxSpeed;
-        
-        // On déplace le conteneur. Comme il est en position: absolute, 
-        // cela va créer un décalage fluide par rapport à la vidéo en arrière-plan.
-        container.style.transform = `translateY(${translateY}px)`;
-        
-        ticking = false;
-    }
-
-    function onScroll() {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                checkVisibility();
-                parallaxEffect();
-            });
-            ticking = true;
-        }
-    }
-
-    // Forcer l'état initial basse du logo avant de lancer la détection
-    checkVisibility();
-
-    // Écouteur d'événement sur le défilement
-    window.addEventListener('scroll', onScroll, { passive: true });
 });

@@ -25,3 +25,34 @@ if ( get_stylesheet() !== get_template() ) {
         return get_option( 'theme_mods_' . get_template(), $default );
     } );
 }
+
+                // Swiper script pour le carrousel
+
+function koukaki_enqueue_swiper_scripts() {
+    // 1. Importer le CSS de Swiper
+    wp_enqueue_style(
+        'swiper-bundle-css',
+        'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
+        array(),
+        '11.0.0'
+    );
+
+    // 2. Importer le JS de Swiper
+    wp_enqueue_script(
+        'swiper-bundle-js',
+        'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+        array(),
+        '11.0.0',
+        true
+    );
+
+    // 3. Mettre à jour ton script unique (script.js)
+    wp_enqueue_script(
+        'child-script-js', // Garde l'identifiant exact de ton script actuel
+        get_stylesheet_directory_uri() . '/assets/js/script.js', // Ton fichier unique
+        array('swiper-bundle-js'), // <--- ESSENTIEL : Force Swiper à charger AVANT ton script !
+        '1.0.0',
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'koukaki_enqueue_swiper_scripts', 20);

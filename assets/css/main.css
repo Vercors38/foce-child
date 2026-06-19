@@ -321,5 +321,33 @@ ul::after {
     transform: translateY(-15px);
   }
 }
+/* ==========================================================================
+   5. SLIDER CARACTÈRES
+   ========================================================================== */
+/* ==========================================================================
+   SECTION PERSONNAGES - RECONSTRUCTION DU CARROUSEL
+   ========================================================================== */
+#characters {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  padding: 4rem 0;
+}
+#characters .main-character {
+  width: 100%;
+  text-align: left;
+  padding-left: 10%;
+  margin-bottom: 2rem;
+}
+#characters .main-character h3 {
+  display: inline-block;
+}
+#characters .swiper {
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 60px;
+}
 
 /*# sourceMappingURL=main.css.map */
